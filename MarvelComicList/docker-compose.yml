@@ -1,13 +1,5 @@
 version: '3.8'
 services:
-    db:
-        image: mysql:latest
-        environment:
-            MYSQL_ROOT_PASSWORD: examplepassword
-            MYSQL_DATABASE: exampledatabase
-            MYSQL_USER: exampleuser
-            MYSQL_PASSWORD: examplepassword
-
     web:
         build: .
         ports:
@@ -21,3 +13,19 @@ services:
             MYSQL_PASSWORD: examplepassword
         volumes:
             - .:/var/www/html
+
+    db:
+        image: mysql:latest
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: exampledatabase
+            MYSQL_USER: exampleuser
+            MYSQL_PASSWORD: examplepassword
+        ports:
+            - "3306:3306"
+        volumes:
+            - db-data:/var/lib/mysql
+
+volumes:
+    db-data:
